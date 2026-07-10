@@ -1,0 +1,22 @@
+# Copy to a *.tfvars file (e.g. `dev.tfvars`) and adjust as needed.
+# Then run: tofu apply -var-file=dev.tfvars
+
+resource_group_name = "rg-functions-aca"
+location            = "westeurope"
+
+# Image to deploy. Replace with your own registry image once built.
+container_image = "mcr.microsoft.com/k8se/quickstart-functions:latest"
+
+# Python function app defaults.
+functions_runtime = "python"
+target_port       = 80
+
+cpu_core    = 0.5
+memory_size = 1
+min_replicas = 1
+max_replicas = 3
+
+tags = {
+  workload    = "mcp-tool-template"
+  environment = "dev"
+}

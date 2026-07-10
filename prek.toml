@@ -1,0 +1,147 @@
+# =========================
+# CORE PRE-COMMIT HOOKS
+# =========================
+
+[[repos]]
+repo = "https://github.com/pre-commit/pre-commit-hooks"
+rev = "v6.0.0"
+
+[[repos.hooks]]
+id = "trailing-whitespace"
+stages = ["pre-commit"]
+
+[[repos.hooks]]
+id = "end-of-file-fixer"
+stages = ["pre-commit"]
+
+[[repos.hooks]]
+id = "check-toml"
+stages = ["pre-commit"]
+
+[[repos.hooks]]
+id = "check-yaml"
+stages = ["pre-commit"]
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "ruff-check"
+name = "ruff check"
+entry = "ruff"
+args = ["check", "--fix"]
+language = "system"
+types_or = ["python", "pyi", "jupyter"]
+stages = ["pre-commit"]
+
+[[repos.hooks]]
+id = "ruff-format"
+name = "ruff format"
+entry = "ruff"
+args = ["format"]
+language = "system"
+types_or = ["python", "pyi", "jupyter"]
+stages = ["pre-commit"]
+
+# =========================
+# OPENTOFU / TERRAFORM
+# =========================
+
+[[repos]]
+repo = "https://github.com/tofuutils/pre-commit-opentofu"
+rev = "v2.4.2"
+
+[[repos.hooks]]
+id = "tofu_fmt"
+args = ["--args=-write=false", "--args=-no-color", "--args=-diff"]
+stages = ["pre-commit"]
+
+[[repos.hooks]]
+id = "tofu_validate"
+args = ["--hook-config=--retry-once-with-cleanup=true"]
+stages = ["pre-push"]
+
+[[repos.hooks]]
+id = "tofu_tflint"
+stages = ["pre-commit"]
+
+# for dev diabled
+# [[repos.hooks]]
+# id = "tofu_trivy"
+# stages = ["pre-push"]
+
+
+# =========================
+# SECRETS SCANNING
+# =========================
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "trivy-secrets"
+name = "Detect hardcoded secrets"
+entry = "trivy fs --scanners secret --exit-code 1 --quiet ."
+language = "system"
+pass_filenames = false
+stages = ["pre-commit"]
+
+
+# =========================
+# PRE-PUSH QUALITY GATES
+# =========================
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "lizard"
+name = "lizard-py"
+entry = "uvx lizard"
+language = "system"
+args = ["--warnings_only", "-l", "python"]
+types = ["python"]
+pass_filenames = true
+stages = ["pre-push"]
+
+[[repos.hooks]]
+id = "pylint"
+name = "pylint"
+entry = "pylint"
+language = "system"
+args = ["-rn", "-sn", "--rcfile=pylintrc"]
+types = ["python"]
+stages = ["pre-push"]
+
+
+# =========================
+# TYPE CHECKING (PYREFLY)
+# =========================
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "pyrefly-check"
+name = "Pyrefly (type checking)"
+entry = "pyrefly check app"
+language = "system"
+pass_filenames = false
+types = ["python"]
+stages = ["pre-push"]
+
+# =========================
+# Commit Message Lint
+# =========================
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "commitlint"
+name = "Check commit messages"
+entry = "commitlint"
+args =  ["--edit"]
+language = "system"
+pass_filenames = false
+stages = ["pre-commit"]

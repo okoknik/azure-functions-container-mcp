@@ -1,0 +1,54 @@
+[project]
+name = "function-mcp-server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "azure-functions>=2.2.0",
+    "azure-monitor-opentelemetry>=1.8.9",
+]
+
+[tool.pyrefly]
+project-includes = ["**/*.py*", "**/*.ipynb"]
+python-version = "3.13"
+python-platform = "linux"
+output-format = "github"
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+  "E",   # pycodestyle errors
+  "F",   # pyflakes correctness checks
+  "W",   # pycodestyle warnings
+  "I",   # isort import ordering
+  "B",   # flake8-bugbear bug-prone patterns
+  "S",   # flake8-bandit security checks
+  "UP",  # pyupgrade modern Python syntax
+  "SIM", # flake8-simplify readability simplifications
+  "A",   # flake8-builtins builtin shadowing checks
+  "C4",  # flake8-comprehensions better comprehensions
+  "DTZ", # flake8-datetimez timezone-aware datetime usage
+  "PIE", # flake8-pie miscellaneous Python improvements
+  "PTH", # flake8-use-pathlib prefer pathlib over os.path
+  "RET", # flake8-return return-statement hygiene
+  "RUF", # Ruff-specific correctness and maintenance rules
+]
+
+ignore = [
+  "E501", # line too long (handled by formatter)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+  "S101", # allow assert statements
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
