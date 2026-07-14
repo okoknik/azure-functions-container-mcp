@@ -53,7 +53,6 @@ resource "azurerm_container_app_environment" "this" {
   location                   = var.location
   resource_group_name        = azurerm_resource_group.this.name
   log_analytics_workspace_id = azurerm_log_analytics_workspace.this.id
-  public_network_access      = true
 
   workload_profile {
     name                  = "Consumption"
